@@ -56,32 +56,80 @@ class Newton {
   }
 
   def limpiar(f: Expr): Expr = f match {
+    case Numero(d) => Numero(d)
+    case Atomo(x) => Atomo(x)
+
     case Suma(Numero(0), e2) => limpiar(e2)
     case Suma(e1, Numero(0)) => limpiar(e1)
-    case Suma(e1, e2) => Suma(limpiar(e1), limpiar(e2))
+    case Suma(e1, e2) =>
+      val l1 = limpiar(e1)
+      val l2 = limpiar(e2)
 
+      (l1, l2) match {
+        case (Numero(0), l2) => l2
+        case (l1, Numero(0)) => l1
+        case (l1, l2) => Suma(l1, l2)
+      }
+
+    case Resta(Numero(0), e2) => Prod(Numero(-1), limpiar(e2))
     case Resta(e1, Numero(0)) => limpiar(e1)
-    case Resta(e1, e2) => Resta(limpiar(e1), limpiar(e2))
+    case Resta(e1, e2) =>
+      val l1 = limpiar(e1)
+      val l2 = limpiar(e2)
+
+      (l1, l2) match {
+        case (Numero(0), l2) => Prod(Numero(-1), l2)
+        case (l1, Numero(0)) => l1
+        case (l1, l2) => if (l1 == l2) Numero(0) else Resta(l1, l2)
+      }
 
     case Prod(Numero(0), _) => Numero(0)
     case Prod(_, Numero(0)) => Numero(0)
     case Prod(Numero(1), e2) => limpiar(e2)
     case Prod(e1, Numero(1)) => limpiar(e1)
-    case Prod(e1, e2) => Prod(limpiar(e1), limpiar(e2))
+    case Prod(e1, e2) =>
+      val l1 = limpiar(e1)
+      val l2 = limpiar(e2)
+
+      (l1, l2) match {
+        case (Numero(0), _) => Numero(0)
+        case (_, Numero(0)) => Numero(0)
+        case (Numero(1), l2) => l2
+        case (l1, Numero(1)) => l1
+        case (l1, l2) => Prod(l1, l2)
+      }
 
     case Div(e1, Numero(1)) => limpiar(e1)
-    case Div(e1, e2) => Div(limpiar(e1), limpiar(e2))
+    case Div(e1, e2) =>
+      val l1 = limpiar(e1)
+      val l2 = limpiar(e2)
+
+      (l1, l2) match {
+        case (l1, Numero(1)) => l1
+        case (l1, l2) => Div(l1, l2)
+      }
     case Div(_, Numero(0)) => throw new ArithmeticException("La división por cero no es válida")
 
     case Expo(_, Numero(0)) => Numero(1)
     case Expo(e1, Numero(1)) => limpiar(e1)
-    case Expo(e1, e2) => Expo(limpiar(e1), limpiar(e2))
+    case Expo(e1, e2) =>
+      val l1 = limpiar(e1)
+      val l2 = limpiar(e2)
+
+      (l1, l2) match {
+        case (_, Numero(0)) => Numero(1)
+        case (l1, Numero(1)) => l1
+        case (l1, l2) => Expo(l1, l2)
+      }
 
     case Logaritmo(Numero(1)) => Numero(0)
-    case Logaritmo(e1) => Logaritmo(limpiar(e1))
+    case Logaritmo(e1) =>
+      val l1 = limpiar(e1)
 
-    case Numero(d) => Numero(d)
-    case Atomo(x) => Atomo(x)
+      l1 match {
+        case Numero(1) => Numero(0)
+        case l1 => Logaritmo(l1)
+      }
     case _ => throw new IllegalArgumentException("No se conoce el tipo de expresión")
   }
 }
