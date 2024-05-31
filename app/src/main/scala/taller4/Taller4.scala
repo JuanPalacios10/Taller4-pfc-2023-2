@@ -12,7 +12,7 @@ import org.scalameter.Warmer
 object Taller4{
 
   def saludo() = "Taller 4"
-//Prueba Commit
+
   def main(args: Array[String]): Unit = {
     println(saludo())
     println(
