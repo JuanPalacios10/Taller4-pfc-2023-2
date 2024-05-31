@@ -11,6 +11,18 @@ case class Expo(e1:Expr, e2:Expr) extends Expr
 case class Logaritmo(e1:Expr) extends Expr
 
 class Newton {
+  def mostrar(e: Expr): String = {
+    e match {
+      case Numero(d) => s"$d"
+      case Atomo(x) => s"$x"
+      case Suma(e1, e2) => s"(${mostrar(e1)} + ${mostrar(e2)})"
+      case Prod(e1, e2) => s"(${mostrar(e1)} * ${mostrar(e2)})"
+      case Resta(e1, e2) => s"(${mostrar(e1)} - ${mostrar(e2)})"
+      case Div(e1, e2) => s"(${mostrar(e1)} / ${mostrar(e2)})"
+      case Expo(e1, e2) => s"(${mostrar(e1)} ^ ${mostrar(e2)})"
+      case Logaritmo(e1) => s"(lg(${mostrar(e1)}))"
+    }
+    
   def evaluar(f: Expr, a: Atomo, v: Double): Double = f match {
     case Numero(d) => d
     case Atomo(x) =>
