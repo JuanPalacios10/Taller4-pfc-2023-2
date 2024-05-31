@@ -21,6 +21,7 @@ object Taller4{
     val expr4 = Logaritmo(Atomo('x'))
     val expr5 = Prod(Div(expr1 , expr2) , Resta(expr3 , expr4))
     val expr6 = Expo(Atomo('x') ,Numero(3))
+    
 
     println(saludo())
   }
