@@ -1,5 +1,7 @@
 package taller4
 
+import scala.annotation.tailrec
+
 trait Expr
 case class Numero (d:Double) extends Expr
 case class Atomo (x:Char) extends Expr
@@ -49,7 +51,9 @@ class Newton {
     case Suma(e1, e2) => evaluar(e1, a, v) + evaluar(e2, a, v)
     case Resta(e1, e2) => evaluar(e1, a, v) - evaluar(e2, a, v)
     case Prod(e1, e2) => evaluar(e1, a, v) * evaluar(e2, a, v)
-    case Div(e1, e2) => evaluar(e1, a, v) / evaluar(e2, a, v)
+    case Div(e1, e2) =>
+      if (evaluar(e2, a, v) == 0) throw new ArithmeticException("No se puede dividir por cero")
+      else evaluar(e1, a, v) / evaluar(e2, a, v)
     case Expo(e1, e2) => math.pow(evaluar(e1, a, v), evaluar(e2, a, v))
     case Logaritmo(e1) => math.log(evaluar(e1, a, v))
     case _ => throw new IllegalArgumentException("No se conoce el tipo de expresión")
@@ -131,5 +135,20 @@ class Newton {
         case l1 => Logaritmo(l1)
       }
     case _ => throw new IllegalArgumentException("No se conoce el tipo de expresión")
+  }
+
+  @tailrec
+  final def raizNewton(f: Expr, a: Atomo, x0: Double, ba: (Expr, Atomo, Double) => Boolean, acc: Int = 0): Double = {
+    if (ba(f, a, x0) || acc >= 1000000) x0
+    else {
+      val evaluacion = evaluar(f, a, x0)
+      val devaluacion = evaluar(limpiar(derivar(f, a)), a, x0)
+      val nuevopunto = x0 - (evaluacion/devaluacion)
+      raizNewton(f, a, nuevopunto, ba, acc + 1)
+    }
+  }
+
+  def buenaAprox(f: Expr, a: Atomo, d: Double): Boolean = {
+    Math.abs(evaluar(f, a, d)) < 0.0001
   }
 }
