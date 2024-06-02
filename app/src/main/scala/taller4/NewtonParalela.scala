@@ -51,10 +51,11 @@ class NewtonParalela {
         Prod(Expo(e1, e2), Suma(Div(Prod(d1, e2), e1), Prod(d2, Logaritmo(e1))))
       case _ => newton.derivar(f, a)
     }
-    
+  }
+
   def evaluarPar(f: Expr, a: Atomo, v: Double): Double = f match {
-    case Numero(d) => newton.evaluar(f, a, v)
-    case Atomo(x) => newton.evaluar(f,a, v)
+    case Numero(_) => newton.evaluar(f, a, v)
+    case Atomo(_) => newton.evaluar(f, a, v)
     case Suma(e1, e2) =>
       val (ev1, ev2) = parallel(evaluarPar(e1, a, v), evaluarPar(e2, a, v))
       ev1 + ev2
@@ -65,15 +66,13 @@ class NewtonParalela {
       val (ev1, ev2) = parallel(evaluarPar(e1, a, v), evaluarPar(e2, a, v))
       ev1 * ev2
     case Div(e1, e2) =>
-      if (evaluarPar(e2, a, v) == 0) newton.evaluar(f,a,v)
-      else {
-        val (ev1, ev2) = parallel(evaluarPar(e1, a, v), evaluarPar(e2, a, v))
-        ev1 / ev2
-      }
+      val (ev1, ev2) = parallel(evaluarPar(e1, a, v), evaluarPar(e2, a, v))
+      if (ev2 == 0) throw new ArithmeticException("No se puede dividir por cero")
+      else ev1 / ev2
     case Expo(e1, e2) =>
       val (ev1, ev2) = parallel(evaluarPar(e1, a, v), evaluarPar(e2, a, v))
-      math.pow(ev1,ev2)
-    case Logaritmo(e1) => newton.evaluar(f,a,v)
-    case _ => newton.evaluar(f,a,v)
+      math.pow(ev1, ev2)
+    case Logaritmo(_) => newton.evaluar(f, a, v)
+    case _ => newton.evaluar(f, a, v)
   }
 }
