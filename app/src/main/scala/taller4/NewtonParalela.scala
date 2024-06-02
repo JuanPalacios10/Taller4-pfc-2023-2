@@ -28,7 +28,7 @@ class NewtonParalela {
       case _ => newton.mostrar(e)
     }
   }
-  
+
   def derivarPar(f: Expr, a: Atomo): Expr = {
     f match {
       case Numero(_) => newton.derivar(f, a)
@@ -51,7 +51,8 @@ class NewtonParalela {
         Prod(Expo(e1, e2), Suma(Div(Prod(d1, e2), e1), Prod(d2, Logaritmo(e1))))
       case _ => newton.derivar(f, a)
     }
-    
+  }
+
   def evaluarPar(f: Expr, a: Atomo, v: Double): Double = f match {
     case Numero(d) => newton.evaluar(f, a, v)
     case Atomo(x) => newton.evaluar(f,a, v)
