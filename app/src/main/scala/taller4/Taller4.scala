@@ -14,7 +14,8 @@ object Taller4{
   def saludo() = "Taller 4"
 
   def main(args: Array[String]): Unit = {
-    val obj = new Newton()
+    val newton = new Newton()
+    val newtonPar = new NewtonParalela()
     val expr1 = Suma(Atomo('x') , Numero(2))
     val expr2 = Prod(Atomo('x') , Atomo('x'))
     val expr3 = Suma(expr1 , Expo(expr2 ,Numero(5)))
@@ -23,5 +24,15 @@ object Taller4{
     val expr6 = Expo(Atomo('x') ,Numero(3))
 
     println(saludo())
+
+    /*val seq = withWarmer(new Warmer.Default) measure {
+      newton.mostrar(expr30)
+    }
+
+    val par = withWarmer(new Warmer.Default) measure {
+      newtonPar.mostrarPar(expr30)
+    }
+
+    println(seq, par, seq.value / par.value)*/
   }
  }
