@@ -75,4 +75,53 @@ class NewtonParalela {
     case Logaritmo(_) => newton.evaluar(f, a, v)
     case _ => newton.evaluar(f, a, v)
   }
+  def limpiarPar(f: Expr): Expr = f match {
+    case Numero(_) => newton.limpiar(f)
+    case Atomo(_) => newton.limpiar(f)
+
+    case Suma(e1, e2) =>
+      val (l1, l2) = parallel(limpiarPar(e1), limpiarPar(e2))
+
+      (l1, l2) match {
+        case (Numero(0), l2) => l2
+        case (l1, Numero(0)) => l1
+        case (l1, l2) => Suma(l1, l2)
+      }
+    case Resta(e1, e2) =>
+      val (l1, l2) = parallel(limpiarPar(e1), limpiarPar(e2))
+
+      (l1,l2) match {
+        case (Numero(0), l2) => Prod(Numero(-1), l2)
+        case (l1, Numero(0)) => l1
+        case (l1, l2) => if(l1==l2) Numero(0) else Resta(l1, l2)
+      }
+    case Prod(e1, e2) =>
+      val (l1, l2) = parallel(limpiarPar(e1), limpiarPar(e2))
+
+      (l1, l2) match {
+        case (Numero(0), _) => Numero(0)
+        case (_, Numero(0)) => Numero(0)
+        case (Numero(1), l2) => l2
+        case (l1, Numero(1)) => l1
+        case (l1,l2) => Prod(l1, l2)
+      }
+    case Div(e1, e2) =>
+      val (l1, l2) = parallel(limpiarPar(e1), limpiarPar(e2))
+
+      (l1, l2) match {
+        case (l1, Numero(1)) => l1
+        case (_, Numero(0)) => throw new ArithmeticException("No se puede dividir por cero")
+        case (l1, l2) => Div(l1, l2)
+      }
+    case Expo(e1, e2) =>
+      val (l1, l2) = parallel(limpiarPar(e1), limpiarPar(e2))
+
+      (l1, l2) match {
+        case (_, Numero(0)) => Numero(1)
+        case (_, Numero(1)) => l1
+        case(l1, l2) => Expo(l1, l2)
+      }
+    case Logaritmo(_) => newton.limpiar(f)
+    case _ => throw new IllegalArgumentException("No se conoce el tipo de expresión")
+  }
 }
