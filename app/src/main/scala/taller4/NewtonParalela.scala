@@ -28,7 +28,7 @@ class NewtonParalela {
       case _ => newton.mostrar(e)
     }
   }
-  
+
   def derivarPar(f: Expr, a: Atomo): Expr = {
     f match {
       case Numero(_) => newton.derivar(f, a)
