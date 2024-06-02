@@ -25,14 +25,14 @@ object Taller4{
 
     println(saludo())
 
-    /*val seq = withWarmer(new Warmer.Default) measure {
-      newton.mostrar(expr30)
+    val seq = withWarmer(new Warmer.Default) measure {
+      newton.mostrar(expr6)
     }
 
     val par = withWarmer(new Warmer.Default) measure {
-      newtonPar.mostrarPar(expr30)
+      newtonPar.mostrarPar(expr6)
     }
 
-    println(seq, par, seq.value / par.value)*/
+    println(seq, par, seq.value / par.value)
   }
  }
