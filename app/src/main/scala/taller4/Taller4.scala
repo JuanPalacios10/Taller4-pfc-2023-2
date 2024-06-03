@@ -12,11 +12,11 @@ object Taller4{
 
   def main(args: Array[String]): Unit = {
     val benchmarking = new Benchmarking()
-  benchmarking.comparacionMostrar()
-  benchmarking.comparacionDerivar()
-  benchmarking.comparacionEvaluar()
-  benchmarking.comparacionLimpiar()
-  benchmarking.comparacionNewton()
+    benchmarking.comparacionMostrar()
+    benchmarking.comparacionDerivar()
+    benchmarking.comparacionEvaluar()
+    benchmarking.comparacionLimpiar()
+    benchmarking.comparacionNewton()
 
   }
  }
