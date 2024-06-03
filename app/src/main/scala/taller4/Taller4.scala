@@ -21,11 +21,11 @@ object Taller4{
     val expr3 = Suma(expr1 , Expo(expr2 ,Numero(5)))
     val expr4 = Logaritmo(Atomo('x'))
     val expr5 = Prod(Div(expr1 , expr2) , Resta(expr3 , expr4))
-    val expr6 = Expo(Atomo('x') ,Numero(3))
-    val expr7 = Suma(expr1, Atomo('y'))*/
-    val expr1 = Resta(Prod(Numero(6), Expo(Numero(2), Numero(3))), Div(Numero(18), Suma(Numero(5), Numero(2))))
-    val expr2 = Suma(Prod(Numero(8), Expo(Numero(3), Numero(2))), Resta(Numero(12), Numero(4)))
-    val expr3 = Resta(Prod(Numero(2), Numero(5)), Div(Numero(15), Expo(Numero(3), Numero(2))))
+    val expr6 = Expo(Atomo('x') ,Numero(3))*/
+    val expr = Suma(Resta(Prod(Atomo('x'), Atomo('x')), Prod(Numero(5), Atomo('x'))), Numero(6))
+    val expr1 = Resta(Prod(Atomo('x'), Expo(Atomo('x'), Numero(3))), Div(Numero(18), Suma(Atomo('x'), Numero(2))))
+    val expr2 = Suma(Prod(Atomo('x'), Expo(Numero(3), Atomo('x'))), Resta(Numero(12), Atomo('x')))
+    val expr3 = Resta(Prod(Atomo('x'), Atomo('x')), Div(Atomo('x'), Expo(Atomo('x'), Numero(2))))
     val expr4 = Div(expr1, Suma(expr2, expr3))
     val expr5 = Prod(expr1, Div(expr2, Resta(expr3, expr4)))
     val expr6 = Suma(expr5, Resta(expr4, Prod(expr3, Div(expr2, expr1))))
@@ -57,13 +57,22 @@ object Taller4{
     println(saludo())
 
     val seq = withWarmer(new Warmer.Default) measure {
-      newton.limpiar(expr30)
+      newton.raizNewton(expr5, Atomo('x'), 600, newton.buenaAprox)
+      newton.raizNewton(expr5, Atomo('x'), 600, newton.buenaAprox)
+      newton.raizNewton(expr5, Atomo('x'), 600, newton.buenaAprox)
+      newton.raizNewton(expr5, Atomo('x'), 600, newton.buenaAprox)
+      newton.raizNewton(expr5, Atomo('x'), 600, newton.buenaAprox)
     }
 
     val par = withWarmer(new Warmer.Default) measure {
-      newtonPar.limpiarPar(expr30)
+      newtonPar.raizNewtonPar(expr5, Atomo('x'), 600, newton.buenaAprox)
+      newtonPar.raizNewtonPar(expr5, Atomo('x'), 600, newton.buenaAprox)
+      newtonPar.raizNewtonPar(expr5, Atomo('x'), 600, newton.buenaAprox)
+      newtonPar.raizNewtonPar(expr5, Atomo('x'), 600, newton.buenaAprox)
+      newtonPar.raizNewtonPar(expr5, Atomo('x'), 600, newton.buenaAprox)
     }
 
-    println(seq, par, seq.value / par.value)
+    val n = 5
+    println(seq.value / n, par.value / n, (seq.value / n) / (par.value / n))
   }
  }
