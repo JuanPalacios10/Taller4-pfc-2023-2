@@ -6,7 +6,6 @@ class Benchmarking {
   val newton = new Newton()
   val newtonPar = new NewtonParalela()
 
-  val expr = Suma(Resta(Prod(Atomo('x'), Atomo('x')), Prod(Numero(5), Atomo('x'))), Numero(6))
   val expr1 = Resta(Prod(Atomo('x'), Expo(Atomo('x'), Numero(3))), Div(Numero(18), Suma(Atomo('x'), Numero(2))))
   val expr2 = Suma(Prod(Atomo('x'), Expo(Numero(3), Atomo('x'))), Resta(Numero(12), Atomo('x')))
   val expr3 = Resta(Prod(Atomo('x'), Atomo('x')), Div(Atomo('x'), Expo(Atomo('x'), Numero(2))))
@@ -38,7 +37,6 @@ class Benchmarking {
   val expr29 = Resta(expr28, expr27)
   val expr30 = Prod(expr29, expr28)
   val expr5_1 = Suma(Prod(expr1, Div(expr2, Suma(expr3, expr4))), Prod(expr1, Div(expr2, Suma(expr3, expr4))))
-
 
   def comparacionDerivar(): Unit = {
 
@@ -78,11 +76,11 @@ class Benchmarking {
     }
 
     println(s"Tiempo de mostrar secuencial (seq): ${seq1.value}," +
-      s" Tiempo de la mostrar paralela (par): ${par1.value}," +
+      s" Tiempo de mostrar paralela (par): ${par1.value}," +
       s" Diferencia: ${seq1.value / par1.value}")
 
     println(s"Tiempo de mostrar secuencial (seq): ${seq2.value}," +
-      s" Tiempo de la mostrar paralela (par): ${par2.value}," +
+      s" Tiempo de mostrar paralela (par): ${par2.value}," +
       s" Diferencia: ${seq2.value / par2.value}")
   }
   def comparacionLimpiar(): Unit = {
@@ -101,11 +99,11 @@ class Benchmarking {
     }
 
     println(s"Tiempo de limpiar secuencial (seq): ${seq1.value}," +
-      s" Tiempo de la limpiar paralela (par): ${par1.value}," +
+      s" Tiempo de limpiar paralela (par): ${par1.value}," +
       s" Diferencia: ${seq1.value / par1.value}")
 
     println(s"Tiempo de limpiar secuencial (seq): ${seq2.value}," +
-      s" Tiempo de la limpiar paralela (par): ${par2.value}," +
+      s" Tiempo de limpiar paralela (par): ${par2.value}," +
       s" Diferencia: ${seq2.value / par2.value}")
   }
   def comparacionEvaluar(): Unit = {
@@ -124,11 +122,11 @@ class Benchmarking {
     }
 
     println(s"Tiempo de evaluar secuencial (seq): ${seq1.value}," +
-      s" Tiempo de la evaluar paralela (par): ${par1.value}," +
+      s" Tiempo de evaluar paralela (par): ${par1.value}," +
       s" Diferencia: ${seq1.value / par1.value}")
 
     println(s"Tiempo de evaluar secuencial (seq): ${seq2.value}," +
-      s" Tiempo de la evaluar paralela (par): ${par2.value}," +
+      s" Tiempo de evaluar paralela (par): ${par2.value}," +
       s" Diferencia: ${seq2.value / par2.value}")
   }
   def comparacionNewton(): Unit = {
