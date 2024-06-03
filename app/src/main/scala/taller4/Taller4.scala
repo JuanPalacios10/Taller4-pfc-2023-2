@@ -5,15 +5,17 @@
   */
 package taller4
 
-import org.scalameter.measure
-import org.scalameter.withWarmer
-import org.scalameter.Warmer
 
 object Taller4{
 
   def saludo() = "Taller 4"
 
   def main(args: Array[String]): Unit = {
-    println(saludo())
+    val benchmarking = new Benchmarking()
+    benchmarking.comparacionMostrar()
+    benchmarking.comparacionDerivar()
+    benchmarking.comparacionEvaluar()
+    benchmarking.comparacionLimpiar()
+    benchmarking.comparacionNewton()
   }
  }
