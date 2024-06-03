@@ -17,6 +17,5 @@ object Taller4{
     benchmarking.comparacionEvaluar()
     benchmarking.comparacionLimpiar()
     benchmarking.comparacionNewton()
-
   }
  }
