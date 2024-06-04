@@ -156,6 +156,12 @@ class NewtonParalela {
     }
   }
 
+  // En el metodo paralelo del metodo de Newton se realiza una paralelización del proceso de cálculo mediante el uso de la clase Future de Scala.
+  // La paralelización se piensa al encapsular cada iteración de una secuencia de cálculos dentro de Future,
+  // permitiendo la ejecución asíncrona de las operaciones. En cada iteración,
+  // se evalúan la función y su derivada en paralelo mediante las funciones evaluarPar y limpiarPar,
+  // utilizando flatMap para encadenar operaciones de manera que cada cálculo espere la finalización de los anteriores.
+  // Esta estrategia aprovecha los múltiples núcleos de la CPU para mejorar la eficiencia y reducir el tiempo total de cálculo.
   def raizNewtonPar(f: Expr, a: Atomo, x0: Double, ba: (Expr, Atomo, Double) => Boolean): Future[Double] = {
     (1 to 100).foldLeft(Future.successful(x0)) { (futureX, _) =>
       futureX.flatMap { x =>
